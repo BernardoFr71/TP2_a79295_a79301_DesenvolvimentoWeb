@@ -1,0 +1,114 @@
+openapi: 3.0.3
+info:
+  title: API de Municípios de Portugal (Continente)
+  description: API desenvolvida para o TP2 de Desenvolvimento de Aplicações Web - Integração com geoapi.pt
+  version: 1.0.0
+  contact:
+    name: [Bernardo Freitas & Tomás Anastácio / Grupo a79295_a79301]
+servers:
+  - url: http://localhost:3000
+    description: Servidor local de desenvolvimento
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+
+security:
+  - ApiKeyAuth: []
+
+paths:
+  /api/municipios:
+    get:
+      summary: Lista todos os municípios (paginado)
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: distrito
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de municípios
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Municipio'
+
+  /api/municipios/{id}:
+    get:
+      summary: Detalhe de um município por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Município encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Municipio'
+
+  /api/municipios/distrito/{distrito}:
+    get:
+      summary: Municípios por distrito
+      parameters:
+        - name: distrito
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista filtrada por distrito
+
+components:
+  schemas:
+    Municipio:
+      type: object
+      properties:
+        _id:
+          type: string
+        codigo:
+          type: string
+          example: "0101"
+        nome:
+          type: string
+          example: "Albufeira"
+        distrito:
+          type: string
+          example: "Faro"
+        coordenadas:
+          type: object
+          properties:
+            latitude:
+              type: number
+            longitude:
+              type: number
+        populacao2025:
+          type: number
+          description: Valor estimado/processado
+        densidade:
+          type: number
+        ultimaAtualizacao:
+          type: string
+          format: date-time
+        fonte:
+          type: string
+          example: "geoapi.pt"

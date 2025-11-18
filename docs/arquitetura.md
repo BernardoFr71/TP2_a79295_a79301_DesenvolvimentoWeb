@@ -1,12 +1,8 @@
-Aqui tens o ficheiro **arquitetura.md** 100% completo, profissional e alinhado com todos os critérios de avaliação da Fase 2 (os 15% garantidos).  
-Copia e cola diretamente no teu repositório GitHub em `docs/arquitetura.md`.
-
-```markdown
-# Fase 2 – Desenho e Arquitetura do Sistema  
+# Desenho e Arquitetura do Sistema  
 **Projeto de Integração de Sistemas de Informação**  
 Disciplina: Desenvolvimento de Aplicações Web  
 Data: 18 de novembro de 2025  
-Autor(es): [Insere o teu nome / nomes do grupo]
+Autores: [Bernardo Freitas / Grupo a79295_a79301]
 
 ---
 
