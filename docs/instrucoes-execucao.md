@@ -1,21 +1,3 @@
-Perfeito! Atualiza o teu ficheiro **.env** na raiz do projeto com esta API Key exatamente como pediste (e que fica bem visível na entrega):
-
-```env
-PORT=3000
-MONGODB_URI=mongodb://127.0.0.1:27017/geoapi_db
-API_KEY=minha_chave_secreta_12345
-```
-
-### Documentos finais que só faltam para entregares amanhã com 20 valores
-
-#### 1. instrucoes-execucao.md (o ficheiro c) da entrega – copia e cola nisto)
-
-```markdown
-# Instruções de Execução e Descrição da Implementação
-**TP2 – Projeto de Integração de Sistemas de Informação**
-**Alunos:** [insere os teus números/nomes – ex: a79295, a79301]
-**Data:** 18-11-2025
-
 ## 1. Descrição da Implementação Realizada
 
 - **API externa utilizada**: https://json.geoapi.pt/municipios (API pública portuguesa sugerida no enunciado)
