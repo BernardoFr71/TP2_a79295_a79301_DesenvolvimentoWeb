@@ -1,0 +1,39 @@
+{
+  "name": "tp2_a79295_a79301_desenvolvimentoweb",
+  "version": "1.0.0",
+  "description": "Trabalho 2 da UC - DESENVOLVIMENTO DE APLICAÇÕES WEB",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BernardoFr71/TP2_a79295_a79301_DesenvolvimentoWeb.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BernardoFr71/TP2_a79295_a79301_DesenvolvimentoWeb/issues"
+  },
+  "homepage": "https://github.com/BernardoFr71/TP2_a79295_a79301_DesenvolvimentoWeb#readme",
+  "dependencies": {
+    "axios": "^1.13.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.2.1",
+    "helmet": "^8.1.0",
+    "joi": "^18.0.1",
+    "mongoose": "^8.20.0",
+    "node-cron": "^4.2.1",
+    "swagger-ui-express": "^5.0.1",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
