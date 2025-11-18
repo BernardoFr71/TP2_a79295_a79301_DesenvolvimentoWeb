@@ -3,35 +3,38 @@ const Municipio = require('../models/Municipio');
 
 const syncData = async () => {
   try {
-    console.log('Iniciando sincronização com geoapi.pt...');
+    console.log(`[${new Date().toISOString()}] Iniciando sincronização com geoapi.pt...`);
     const response = await axios.get('https://json.geoapi.pt/municipios');
-    const dados = response.data;
+    const municipios = response.data;
 
-    for (const item of dados) {
-      // Filtragem: apenas continente (exclui Açores e Madeira)
-      if (item.distrito === 'Açores' || item.distrito === 'Madeira') continue;
+    let contador = 0;
+    for (const m of municipios) {
+      // Filtragem: apenas continente
+      if (['Açores', 'Madeira'].includes(m.distrito)) continue;
 
-      // Processamento: adicionar dados enriquecidos (exemplo fictício)
-      const populacao2025 = Math.round(Math.random() * 300000 + 5000);
-      const areaKm2 = Math.random() * 500 + 10;
+      // Processamento exemplo (valores fictícios para demonstração)
+      const areaKm2 = Math.random() * 800 + 20;
+      const populacao2025 = Math.floor(Math.random() * 300000 + 5000);
       const densidade = Math.round(populacao2025 / areaKm2);
 
       await Municipio.updateOne(
-        { codigo: item.codigo },
+        { codigo: m.codigo },
         {
           $set: {
-            nome: item.nome,
-            distrito: item.distrito,
-            coordenadas: item.coordenadas,
+            nome: m.nome,
+            distrito: m.distrito,
+            coordenadas: m.coordenadas || null,
             populacao2025,
             densidade,
-            ultimaAtualizacao: new Date()
+            ultimaAtualizacao: new Date(),
+            fonte: 'geoapi.pt'
           }
         },
         { upsert: true }
       );
+      contador++;
     }
-    console.log('Sincronização concluída com sucesso!');
+    console.log(`Sincronização concluída: ${contador} municípios processados/armazenados.`);
   } catch (error) {
     console.error('Erro na sincronização:', error.message);
   }
