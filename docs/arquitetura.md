@@ -2,7 +2,7 @@
 **Projeto de Integração de Sistemas de Informação**  
 Disciplina: Desenvolvimento de Aplicações Web  
 Data: 18 de novembro de 2025  
-Autores: [Bernardo Freitas / Grupo a79295_a79301]
+Autores: [Bernardo Freitas & Tomás Anastácio / Grupo a79295_a79301]
 
 ---
 
