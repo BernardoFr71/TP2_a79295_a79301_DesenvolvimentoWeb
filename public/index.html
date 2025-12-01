@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Municípios de Portugal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Municípios de Portugal</h1>
+            <div class="api-key-container">
+                <input type="password" id="apiKey" placeholder="Insira sua API Key" value="a79301">
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="filters">
+            <div class="search-group">
+                <select id="searchType">
+                    <option value="todos">Todos</option>
+                    <option value="nome">Nome</option>
+                    <option value="codigo">Código</option>
+                    <option value="distrito">Distrito</option>
+                </select>
+                <input type="text" id="searchInput" placeholder="Pesquisar..." disabled>
+                <button id="btnSearch">Pesquisar</button>
+            </div>
+        </div>
+
+        <div id="loading" class="hidden">Carregando dados...</div>
+        <div id="error" class="hidden"></div>
+
+        <div id="resultsGrid" class="grid">
+            <!-- Cards serão inseridos aqui -->
+        </div>
+
+        <div class="pagination">
+            <button id="prevPage" disabled>Anterior</button>
+            <span id="pageInfo">Página 1</span>
+            <button id="nextPage" disabled>Próxima</button>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -27,11 +27,35 @@ exports.getAll = async (req, res) => {
   }
 };
 
-// GET por ID (_id do MongoDB)
+// GET por ID (_id do MongoDB - ObjectId)
 exports.getById = async (req, res) => {
   try {
     const dado = await Municipio.findById(req.params.id);
     if (!dado) return res.status(404).json({ erro: 'Município não encontrado' });
+    res.json(dado);
+  } catch (err) {
+    res.status(500).json({ erro: err.message });
+  }
+};
+
+// GET por código (ex: /codigo/0802)
+exports.getByCodigo = async (req, res) => {
+  try {
+    const dado = await Municipio.findOne({ codigo: req.params.codigo });
+    if (!dado) return res.status(404).json({ erro: 'Município não encontrado com este código' });
+    res.json(dado);
+  } catch (err) {
+    res.status(500).json({ erro: err.message });
+  }
+};
+
+// GET por nome (ex: /nome/Lisboa)
+exports.getByNome = async (req, res) => {
+  try {
+    const dado = await Municipio.findOne({ 
+      nome: new RegExp(`^${req.params.nome}$`, 'i') 
+    });
+    if (!dado) return res.status(404).json({ erro: 'Município não encontrado com este nome' });
     res.json(dado);
   } catch (err) {
     res.status(500).json({ erro: err.message });

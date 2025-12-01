@@ -1,0 +1,181 @@
+openapi: 3.0.3
+info:
+  title: API de Municípios de Portugal (Continente)
+  description: API desenvolvida para o TP2 de Desenvolvimento de Aplicações Web - Integração com geoapi.pt
+  version: 1.0.0
+  contact:
+    name: [Bernardo Freitas & Tomás Anastácio / Grupo a79295_a79301]
+servers:
+  - url: http://localhost:3000
+    description: Servidor local de desenvolvimento
+
+security:
+  - ApiKeyAuth: []
+
+paths:
+  /api/municipios:
+    get:
+      summary: Lista todos os municípios (paginado)
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: distrito
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de municípios
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    type: integer
+                  limit:
+                    type: integer
+                  total:
+                    type: integer
+                  totalPages:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Municipio'
+
+  /api/municipios/{id}:
+    get:
+      summary: Busca município por ID do MongoDB (ObjectId)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID do MongoDB (ObjectId) - Ex 674b9c4a1234567890abcdef
+      responses:
+        '200':
+          description: Município encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Municipio'
+        '404':
+          description: Município não encontrado
+
+  /api/municipios/codigo/{codigo}:
+    get:
+      summary: Busca município por código
+      parameters:
+        - name: codigo
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Código do município - Ex 0802 (Faro)
+      responses:
+        '200':
+          description: Município encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Municipio'
+        '404':
+          description: Município não encontrado
+
+  /api/municipios/nome/{nome}:
+    get:
+      summary: Busca município por nome
+      parameters:
+        - name: nome
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Nome do município - Ex Lisboa
+      responses:
+        '200':
+          description: Município encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Municipio'
+        '404':
+          description: Município não encontrado
+
+  /api/municipios/distrito/{distrito}:
+    get:
+      summary: Lista municípios por distrito
+      parameters:
+        - name: distrito
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Nome do distrito - Ex Faro, Porto, Lisboa
+      responses:
+        '200':
+          description: Lista filtrada por distrito
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Municipio'
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      
+  schemas:
+    Municipio:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID do MongoDB
+          example: "674b9c4a1234567890abcdef"
+        codigo:
+          type: string
+          example: "0802"
+        nome:
+          type: string
+          example: "Albufeira"
+        distrito:
+          type: string
+          example: "Faro"
+        coordenadas:
+          type: object
+          properties:
+            latitude:
+              type: number
+              example: 37.0889
+            longitude:
+              type: number
+              example: -8.2504
+        populacao2025:
+          type: number
+          description: População estimada para 2025
+          example: 44158
+        densidade:
+          type: number
+          description: Densidade populacional (hab/km²)
+          example: 559
+        ultimaAtualizacao:
+          type: string
+          format: date-time
+        fonte:
+          type: string
+          example: "geoapi.pt"
