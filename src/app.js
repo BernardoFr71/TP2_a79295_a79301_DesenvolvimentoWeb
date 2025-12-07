@@ -1,15 +1,25 @@
 require('dotenv').config();
 const express = require('express');
-const mongoose = require('mongoose');
 const cron = require('node-cron');
 const helmet = require('helmet');
 const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
+const path = require('path');
+const fs = require('fs');
 
 const dadosRoutes = require('./routes/dadosRoutes');
 const syncData = require('./services/syncGeoApi');
-const path = require('path');
+
+// Garantir que a pasta data existe
+const dataDir = path.join(__dirname, '../data');
+if (!fs.existsSync(dataDir)) {
+  fs.mkdirSync(dataDir, { recursive: true });
+}
+
+// Inicializar base de dados SQLite (carrega o módulo que cria a BD automaticamente)
+require('./models/database');
+console.log('SQLite conectado com sucesso');
 
 // Carrega o swagger.yaml de forma robusta (usando caminho absoluto)
 const swaggerDocument = YAML.load(path.join(__dirname, 'swagger.yaml'));
@@ -26,11 +36,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Rotas protegidas
 app.use('/api/municipios', dadosRoutes);
-
-// Conexão MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/geoapi_db')
-  .then(() => console.log('MongoDB conectado com sucesso'))
-  .catch(err => console.error('Erro MongoDB:', err));
 
 // Sincronização agendada (a cada hora)
 cron.schedule('0 * * * *', () => {
