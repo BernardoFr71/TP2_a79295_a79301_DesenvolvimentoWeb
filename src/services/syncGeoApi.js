@@ -1,5 +1,5 @@
 const axios = require('axios');
-const Municipio = require('../models/Municipio');
+const { upsertMunicipio } = require('../models/database');
 
 const syncData = async () => {
   try {
@@ -41,22 +41,16 @@ const syncData = async () => {
         const areaKm2 = areaHa / 100;
         const densidade = Math.round(populacao2025 / areaKm2);
 
-        await Municipio.updateOne(
-          { nome: m.Concelho || nomeMunicipio }, // Usar nome como chave única
-          {
-            $set: {
-              codigo: m.codigoine || null,
-              nome: m.Concelho || nomeMunicipio,
-              distrito: m.Distrito,
-              coordenadas,
-              populacao2025,
-              densidade,
-              ultimaAtualizacao: new Date(),
-              fonte: 'geoapi.pt'
-            }
-          },
-          { upsert: true }
-        );
+        // Upsert usando SQLite
+        upsertMunicipio({
+          codigo: m.codigoine || null,
+          nome: m.Concelho || nomeMunicipio,
+          distrito: m.Distrito,
+          coordenadas,
+          populacao2025,
+          densidade,
+          fonte: 'geoapi.pt'
+        });
         
         contador++;
         

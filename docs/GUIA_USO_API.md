@@ -2,20 +2,24 @@
 
 ## 🚀 Como Iniciar
 
-1. **Iniciar MongoDB** (noutra janela do terminal):
+1. **Instalar dependências** (apenas na primeira vez):
 ```powershell
-mongod
+npm install
 ```
 
 2. **Iniciar o servidor** (no diretório do projeto):
 ```powershell
+npm start
+# ou em modo desenvolvimento:
 npm run dev
 ```
 
-3. **Aceder ao Swagger UI**:
-```
-http://localhost:3000/api-docs
-```
+3. **Aceder aos serviços**:
+- **API:** http://localhost:3000/api/municipios
+- **Swagger UI:** http://localhost:3000/api-docs
+- **Frontend:** http://localhost:3000
+
+> **Nota:** A base de dados SQLite é criada automaticamente em `data/municipios.db`
 
 ## 🔑 Autenticação
 
@@ -58,7 +62,7 @@ curl -H "x-api-key: a79301" "http://localhost:3000/api/municipios?distrito=faro"
   "totalPages": 14,
   "data": [
     {
-      "_id": "674b9c4a1234567890abcdef",
+      "_id": 1,
       "codigo": "0802",
       "nome": "Albufeira",
       "distrito": "Faro",
@@ -68,7 +72,7 @@ curl -H "x-api-key: a79301" "http://localhost:3000/api/municipios?distrito=faro"
       },
       "populacao2025": 44158,
       "densidade": 559,
-      "ultimaAtualizacao": "2025-12-01T00:08:23.144Z",
+      "ultimaAtualizacao": "2025-12-07T15:42:09.191Z",
       "fonte": "geoapi.pt"
     }
   ]
@@ -77,7 +81,7 @@ curl -H "x-api-key: a79301" "http://localhost:3000/api/municipios?distrito=faro"
 
 ---
 
-### 2. **Buscar por ID do MongoDB**
+### 2. **Buscar por ID**
 ```
 GET /api/municipios/{id}
 ```
